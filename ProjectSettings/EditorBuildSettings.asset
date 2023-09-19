@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DreamForestTree/DemoScene.unity
     guid: 6dc68697d72e283438f1cd3bd3441279
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 42682ec2d4546f3439dc45d1344e6ef0, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6556072d70727744487f4348cd179b16, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: d044d7c1c4a0181409bf76a664bed040, type: 2}

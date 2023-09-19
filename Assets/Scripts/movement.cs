@@ -1,6 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Text;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 using UnityEngine;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.PackageManager;
 
 public class movement : MonoBehaviour
 {
@@ -15,11 +22,23 @@ public class movement : MonoBehaviour
 
     private Rigidbody rb;
 
+    //UDP Sockets
+    IPEndPoint remoteEndPoint;
+    UdpClient client;
+    private string IP = "10.0.0.20";  // define in init
+    public int port = 5000;  // define in init
+    string strMessage = "";
+    public GameObject Kart;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        initUDP();
     }
-
+    void OnAudioFilterRead(float[] data, int channels)
+    {
+        sendString(data);
+    }
     private void Update()
     {
         Move();
@@ -71,4 +90,50 @@ public class movement : MonoBehaviour
             isJumping = false;
         }
     }
+    public void initUDP()
+    {
+        // Endpunkt definieren, von dem die Nachrichten gesendet werden.
+        print("UDPSend.init()");
+
+        // define
+
+
+        // ----------------------------
+        // Senden
+        // ----------------------------
+        remoteEndPoint = new IPEndPoint(IPAddress.Parse(IP), port);
+        client = new UdpClient();
+
+        // status
+        print("Inited to " + IP + " : " + port);
+       
+
+    }
+    //implementation on sending data with udp server
+    private void sendString(float[] message)
+    {
+        try
+        {
+            //if (message != "")
+            //{
+            // print("sending data: ");
+
+            //print all message content in one line 
+            //Console.WriteLine("[{0}]", string.Join(", ", message));
+
+            print(message[0]);
+            // Daten mit der UTF8-Kodierung in das Binärformat kodieren.
+            byte[] data = new byte[sizeof(float) * message.Length];
+            Buffer.BlockCopy(message, 0, data, 0, data.Length);
+            // Den message zum Remote-Client senden.
+            client.Send(data, data.Length, remoteEndPoint);
+            //}
+            // print(data.Length);
+        }
+        catch (Exception err)
+        {
+            print(err.ToString());
+        }
+    }
+
 }
