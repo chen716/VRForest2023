@@ -44,6 +44,18 @@ public class CheckTerrainTextures : MonoBehaviour
         rootsClips = LoadFootstepClips("roots");
         stoneClips = LoadFootstepClips("stone");
     }
+    /*void OnAudioFilterRead(float[] data, int channels)
+    {
+        print("data len: " + data.Length);
+        string toP = "";
+        for (int i = 0; i < 30; i++)
+        {
+            toP += data[i];
+        }
+        print(toP);
+        //print(data);
+        //sendString(data);
+    }*/
     AudioClip[] LoadFootstepClips(string materialName)
     {
         string directoryPath = "Sounds/" + materialName + "/";
