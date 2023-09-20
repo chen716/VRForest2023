@@ -16,7 +16,7 @@ public class movement : MonoBehaviour
     public float sprintMultiplier = 5f;
     public float maxSlopeAngle = 45f;
     public float maxSpeed = 10f; // Define the maximum speed.
-
+    public AudioSource audioSource;
     public float jumpForce = 5f;
     private bool isJumping = false;
 
@@ -27,7 +27,8 @@ public class movement : MonoBehaviour
     UdpClient client;
     private string IP = "10.0.0.20";  // define in init
     public int port = 5000;  // define in init
-
+    public float horizontalInput ;
+    public float verticalInput;
     //UDP socket receiving
     Thread receiveThread;
     Thread receiveThread2;
@@ -57,6 +58,7 @@ public class movement : MonoBehaviour
     public float yf2 = 0;
     public bool WiiBoard = true;
     public bool singleBoard = true;
+    public bool playback = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -66,7 +68,7 @@ public class movement : MonoBehaviour
     {
         print("data len: " + data.Length);
         string toP = "";
-        for (int i = 0; i < 80; i++)
+        for (int i = 200; i < data.Length; i++)
         {
             toP += data[i];
         }
@@ -82,8 +84,8 @@ public class movement : MonoBehaviour
 
     public void Move()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
 
         if (WiiBoard)
         {
@@ -138,6 +140,15 @@ public class movement : MonoBehaviour
                 }
 
             }
+        }
+        if (playback)
+        {
+            // time parser 
+            // desc: track how much time it has been since start using Unity time
+
+            //set vertical input to a value
+            //set horizontal input to a value 
+
         }
         Vector3 moveDirection = transform.forward * verticalInput;
 
